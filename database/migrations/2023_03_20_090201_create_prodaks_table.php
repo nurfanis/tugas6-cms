@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('prodaks', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->unsignedInteger('harga')->default(0);
-            $table->text('deskripsi');
+            $table->string('name', 50);
+            $table->longText('description')->nullable();
+            $table->integer('price');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
             $table->timestamps();
-            $table->foreignId('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prodaks');
+        Schema::dropIfExists('products');
     }
 };

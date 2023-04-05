@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Product;
 
 class ProdukController extends Controller
 {
@@ -13,7 +15,9 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        return view('pages.product.index');
+        return view('pages.product.index', [
+            "products" => Product::all(),
+        ]);
     }
 
     /**
@@ -23,7 +27,9 @@ class ProdukController extends Controller
      */
     public function create()
     {
-        return view('pages.product.tambah');
+        return view('pages.product.tambah', [
+            "categories" => Category::all(),
+        ]);
     }
 
     /**
@@ -34,7 +40,14 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        Product::create([
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'price'=>$request->price,
+            'category_id'=>$request->category_id,
+        ]);
+          return redirect('/produk');
     }
 
     /**
@@ -56,6 +69,8 @@ class ProdukController extends Controller
      */
     public function edit($id)
     {
+        $data=Product::find($id);
+        return view('pages.product.edit' , ['Product' => $data]);
         return view('pages.product.edit');
     }
 
@@ -77,8 +92,11 @@ class ProdukController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product, $id)
     {
-        //
+        
+            Product::find($id)->delete();
+            return redirect('/produk');
+
     }
 }

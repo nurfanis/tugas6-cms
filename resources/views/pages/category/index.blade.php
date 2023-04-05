@@ -1,42 +1,28 @@
 @extends('layouts.master')
 
 @section('content')
-  <div class="container my-3">
-    <a href="{{url('category/create')}}">
-      <button class="primary btn-primary">Tambah Kategori</button>
-    </a>
-    <div class="row my-3">
 
+<body>
+  <div class="container my-3">
+    <a href="{{url('/category/create')}}" class="btn btn-primary my-3"> Tambah categori</a>
+    <!-- {{$Category}} -->
+    <div class="row my-3">
+      @foreach($Category as $item)
       <div class="col-md-3">
         <div class="card">
-          <img src="https://assets.pikiran-rakyat.com/crop/0x212:1080x1064/x/photo/2021/05/03/4025100891.jpg" alt="gambar kategori" style="width: 200px; margin: 10px auto;">
           <div class="card-body">
-            <h5 class="card-title M-1">Gamis</h5>
-            <a href="{{url('category/edit')}}">
-            <button class="primary btn-primary">Edit</button>
-            </a>
-            <a href="{{url('category/destroy')}}">
-            <button class="primary btn-primary">Hapus</button>
-            </a>
+            <h5 class="card-title M-1">{{$item->name}}</h5>
+            <a href="/category/{{$item->id}}/edit" class="btn btn-warning">Edit</a>
+            <form action="{{url('category/'.$item->id)}}" method="post">
+              @method('DELETE')
+              @csrf
+              <button class="btn btn-danger">Delete</button>
+            </form>
           </div>
         </div>
-      </div>   
-      
-      <div class="col-md-3">
-        <div class="card">
-          <img src="https://assets.pikiran-rakyat.com/crop/0x212:1080x1064/x/photo/2021/05/03/4025100891.jpg" alt="gambar kategori" style="width: 200px; margin: 10px auto;">
-          <div class="card-body">
-            <h5 class="card-title M-1">Mukenah</h5>
-            <a href="{{url('category/edit')}}">
-            <button class="primary btn-primary">Edit</button>
-            </a>
-            <a href="{{url('category/destroy')}}">
-            <button class="primary btn-primary">Hapus</button>
-            </a>
-          </div>
-        </div>
-      </div>   
-      
+      </div>
+      @endforeach
     </div>
   </div>
-  @endsection
+</body>
+@endsection

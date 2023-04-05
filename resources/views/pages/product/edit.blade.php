@@ -4,7 +4,10 @@
 <div class="container">
   <h2 class="alert alert-warning text-center mt-3">Form Data Produk</h2>
 
-  <form>
+  <form action="{{url('product/'.$Product->id)}}" method="post">
+    @method('PUT')
+    @csrf
+    
     <div class="form-group">
       <label>Nama Kategori</label>
       <input type="text" name="" class="form-control" placeholder="Nama Kategori...">
